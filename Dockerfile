@@ -1,4 +1,4 @@
-FROM node:14.16.0-buster-slim@sha256:ffc15488e56d99dbc9b90d496aaf47901c6a940c077bc542f675ae351e769a12
+FROM node:16.10.0-slim
 
 WORKDIR /usr/app
 
