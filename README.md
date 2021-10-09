@@ -1,8 +1,8 @@
-Base environment image for Puppeteer (Headless Chrome Node API) with support for jest-puppeteer runner
-
-This is only for testing, do not use for production since permissions are given freely inside the container
+Base environment image for Puppeteer (Headless Chrome Node API) with support for jest-puppeteer runner, if you have any issues please report it here or check [Puppeteer’s troubleshooting doc](https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md)
 
 docker hub: https://hub.docker.com/repository/docker/lironavon/docker-puppeteer-container
+
+For versions check docker hub, or look at the git tags - each tag is a version of node.js, so for example the v16.10.0 tag uses a base of node:16.10.0-slim
 
 ## Getting started
 
@@ -21,17 +21,6 @@ jobs:
     runs-on: ubuntu-20.04
     container: lironavon/docker-puppeteer-container:16.10.0
     steps:
-     # add git access inside the container
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-     # cache dependencies
-      - uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
      # installl dependencies and run tests
       - name: install dependencies
         run: yarn install
@@ -41,7 +30,6 @@ jobs:
 ```
 
 ### Start node application
-
 
 ```bash
 docker run -i --rm --cap-add=SYS_ADMIN \
@@ -53,10 +41,11 @@ docker run -i --rm --cap-add=SYS_ADMIN \
 Write your Dockerfile and run:
 
 ```
-FROM docker push lironavon/docker-puppeteer-container:16.1.0
+FROM lironavon/docker-puppeteer-container:16.1.0
 
 USER root
 
+# do whatever need to be done
 ...
 
 CMD node your-application
